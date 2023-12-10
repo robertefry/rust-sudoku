@@ -2,7 +2,7 @@
 pub fn solve(cells: &[u8;81]) -> Option<[u8;81]>
 {
     let mut index = Some(0);
-    let mut board = Board::from(cells);
+    let mut board = Board::from(*cells);
 
     let get_next_index = |mut idx: usize, backtrack: bool| -> Option<usize>
     {
@@ -81,14 +81,14 @@ impl IndexMut<usize> for Board
 
 impl Board
 {
-    fn from(cells: &[u8;81]) -> Self
+    fn from(cells: [u8;81]) -> Self
     {
-        return Board{ cells: *cells };
+        return Board{ cells };
     }
 
     fn get_next_solution(&self, index: usize) -> Option<u8>
     {
-        for value in self.cells[index]+1..=9
+        for value in self[index]+1..=9
         {
             if ! self.is_valid_solution(index, value)
             {
@@ -105,17 +105,17 @@ impl Board
     {
         for k in GroupIterator::over_x(index)
         {
-            if self.cells[k] == value { return false; }
+            if self[k] == value { return false; }
         }
 
         for k in GroupIterator::over_y(index)
         {
-            if self.cells[k] == value { return false; }
+            if self[k] == value { return false; }
         }
 
         for k in GroupIterator::over_z(index)
         {
-            if self.cells[k] == value { return false; }
+            if self[k] == value { return false; }
         }
 
         return true;
