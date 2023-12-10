@@ -5,6 +5,8 @@ mod benchmark;
 
 fn main()
 {
+    sudoku::initialise();
+
     let dataset = sudoku::load_dataset();
 
     benchmark!("sudoku solve", 10, 1,
