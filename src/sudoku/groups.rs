@@ -29,7 +29,8 @@ impl Groups
     {
         GROUPS.get_or_init(||
         {
-            use std::collections::HashSet;
+            use util::iter::Unique;
+            use util::iter::CollectToArray;
 
             macro_rules! gen_group
             {
@@ -38,13 +39,10 @@ impl Groups
                     (0..81)
                         .map(|k| std::iter::empty()
                             $( .chain((0..81).filter(|&x| k != x && $f(k) == $f(x))) )*
-                            .collect::<HashSet<_>>()
-                            .into_iter()
-                            .collect::<Vec<_>>()
-                            .try_into()
+                            .unique()
+                            .collect_to_array()
                             .unwrap())
-                        .collect::<Vec<_>>()
-                        .try_into()
+                        .collect_to_array()
                         .unwrap()
                 }};
             }

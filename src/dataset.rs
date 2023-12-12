@@ -3,7 +3,7 @@ use itertools::*;
 
 pub fn load() -> Vec<([u8;81],[u8;81])>
 {
-    use util::CollectToArray;
+    use util::iter::CollectToArray;
 
     csv::Reader::from_path("dataset.csv")
         .unwrap()

@@ -1,19 +1,16 @@
 
-pub trait CollectToArray<T, const N: usize>
+pub trait CollectToArray: Iterator
 {
-    fn collect_to_array(self) -> Option<[T;N]>;
-}
-
-impl<T, const N: usize> CollectToArray<T::Item,N> for T
-where
-    T: Iterator,
-{
-    fn collect_to_array(self) -> Option<[T::Item;N]>
+    fn collect_to_array<const N: usize>(self) -> Option<[Self::Item;N]>
+    where
+        Self: Sized
     {
         use std::mem::MaybeUninit;
 
-        let mut array: [MaybeUninit<T::Item>;N] = unsafe{ MaybeUninit::uninit().assume_init() };
+        let mut array: [MaybeUninit<Self::Item>;N];
         let mut count = 0;
+
+        array = unsafe{ MaybeUninit::uninit().assume_init() };
 
         for elem in self.into_iter()
         {
@@ -37,3 +34,5 @@ where
         return Some(unsafe{ std::mem::transmute_copy(&array) });
     }
 }
+
+impl<I: Iterator> CollectToArray for I {}
