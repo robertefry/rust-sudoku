@@ -1,15 +1,13 @@
 
 use rayon::prelude::*;
 
-mod benchmark;
-
 fn main()
 {
     sudoku::initialise();
 
-    let dataset = sudoku::load_dataset();
+    let dataset = sudoku::dataset::load();
 
-    benchmark!("sudoku solve", 10, 1,
+    util::benchmark!("sudoku solve", 10, 1,
     {
         dataset.par_iter().for_each(|(sudoku,_)|
         {

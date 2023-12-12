@@ -1,7 +1,5 @@
 
 mod sudoku;
-pub use sudoku::initialise;
-pub use sudoku::solve;
+pub use sudoku::*;
 
-mod dataset;
-pub use dataset::load_dataset;
+pub mod dataset;

@@ -30,7 +30,7 @@ macro_rules! benchmark
         let sum: u128 = run_times.iter().sum();
         let average_run_time = sum / (run_times.len() as u128);
 
-        println!(" Done!\nTook an average of {:?} milliseconds over {} runs of {} iterations.",
+        println!(" Done!\nTook an average of {:?} microseconds over {} runs of {} iterations.",
             average_run_time,
             $num_runs,
             $num_iters);
