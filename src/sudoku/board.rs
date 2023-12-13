@@ -17,7 +17,7 @@ impl Board
     {
         for value in self.cells[index]+1..=9
         {
-            if ! self.is_valid_solution(index, value)
+            if self.is_invalid_solution(index, value)
             {
                 continue;
             }
@@ -28,9 +28,9 @@ impl Board
         return None;
     }
 
-    fn is_valid_solution(&self, index: usize, value: u8) -> bool
+    fn is_invalid_solution(&self, index: usize, value: u8) -> bool
     {
-        Groups::get_group_xyz(index).iter().all(|&k| self.cells[k] != value)
+        Groups::at(index).any(|k| self.cells[k] == value)
     }
 
     pub fn mark_solution(&mut self, index: usize, value: u8)

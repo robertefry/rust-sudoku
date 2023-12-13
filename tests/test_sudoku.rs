@@ -6,7 +6,7 @@ mod test
     #[test]
     fn test_dataset()
     {
-        let dataset = sudoku::dataset::random(1_000);
+        let dataset = sudoku::dataset::first(1_000);
 
         for (sudoku,expect) in dataset.into_iter()
         {

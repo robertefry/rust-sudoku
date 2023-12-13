@@ -4,7 +4,7 @@ mod groups; use groups::*;
 
 pub fn initialise()
 {
-    groups::initialise();
+    Groups::initialise();
 }
 
 pub fn solve(cells: &[u8;81]) -> Option<[u8;81]>
@@ -36,7 +36,7 @@ pub fn solve(cells: &[u8;81]) -> Option<[u8;81]>
         index = next_index(0, false);
     }
 
-    // 2. while there exists an unsolved cell, either find a solution or backtrack.
+    // 2. While there exists an unsolved cell, either find a solution or backtrack.
 
     while let Some(idx) = index
     {

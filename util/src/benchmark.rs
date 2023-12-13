@@ -6,6 +6,7 @@ macro_rules! benchmark
     {{
         use std::io::*;
         use std::time::*;
+        use num_format::*;
 
         print!("Benchmarking {}", $desc);
         std::io::stdout().flush().unwrap();
@@ -24,15 +25,15 @@ macro_rules! benchmark
                 let _result = $code;
             }
 
-            run_times.push(timer.elapsed().unwrap().as_micros());
+            let duration = timer.elapsed().unwrap().as_micros();
+            run_times.push(duration);
         }
 
         let sum: u128 = run_times.iter().sum();
         let average_run_time = sum / (run_times.len() as u128);
 
-        println!(" Done!\nTook an average of {:?} microseconds over {} runs of {} iterations.",
-            average_run_time,
-            $num_runs,
-            $num_iters);
+        println!(" Done!\nTook an average of {} microseconds over {} runs of {} iterations.",
+            average_run_time.to_formatted_string(&Locale::en),
+            $num_runs, $num_iters);
     }};
 }

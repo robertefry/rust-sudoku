@@ -1,28 +1,23 @@
 
 use std::sync::*;
 
-pub fn initialise()
-{
-    Groups::initialise();
-}
-
 pub struct Groups
 {
-    group_xyz: [[usize;20];81],
+    groups: [[usize;20];81],
 }
 
 static GROUPS: OnceLock<Groups> = OnceLock::new();
 
 impl Groups
 {
-    fn initialise()
+    pub fn initialise()
     {
         Self::get_or_init();
     }
 
-    pub fn get_group_xyz<'a>(index: usize) -> &'a [usize;20]
+    pub fn at(index: usize) -> impl Iterator<Item = usize>
     {
-        return &Self::get_or_init().group_xyz[index];
+        return Self::get_or_init().groups[index].into_iter();
     }
 
     fn get_or_init<'g>() -> &'g Self
@@ -53,7 +48,7 @@ impl Groups
 
             return Groups
             {
-                group_xyz: gen_group!(get_x,get_y,get_z),
+                groups: gen_group!(get_x,get_y,get_z),
             };
         })
     }

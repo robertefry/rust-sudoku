@@ -1,6 +1,23 @@
 
 use itertools::*;
 
+pub fn first(count: usize) -> Vec<([u8;81],[u8;81])>
+{
+    use util::iter::CollectToArray;
+
+    csv::Reader::from_path("dataset.csv")
+        .unwrap()
+        .records()
+        .take(count)
+        .filter_map(|r| r.ok())
+        .filter_map(|r| r.iter()
+            .filter_map(|string| string.chars()
+                .map(|c| c.to_digit(10).map(|d| d as u8).unwrap())
+                .collect_to_array())
+            .next_tuple())
+        .collect()
+}
+
 pub fn load() -> Vec<([u8;81],[u8;81])>
 {
     use util::iter::CollectToArray;
